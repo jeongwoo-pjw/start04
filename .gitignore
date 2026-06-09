@@ -1,0 +1,8 @@
+node_modules/
+package.json
+package-lock.json
+verify.cjs
+verify.mjs
+*.log
+.DS_Store
+Thumbs.db

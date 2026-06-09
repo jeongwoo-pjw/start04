@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI EDU - AI 전문 교육 온라인 플랫폼. AI 기초부터 리터러시까지 체계적인 동영상 강의를 제공합니다." />
+  <title>AI EDU | AI 전문 교육 플랫폼</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#home" class="logo" aria-label="AI EDU 홈">
+        <span class="logo-ai">AI</span><span class="logo-edu">EDU</span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="주 메뉴">
+        <ul class="nav-list">
+          <li><a href="#home"       class="nav-link active" data-nav="home">홈</a></li>
+          <li><a href="#ai-videos"  class="nav-link" data-nav="ai-videos">AI 동영상</a></li>
+          <li><a href="#literacy"   class="nav-link" data-nav="literacy">AI 리터러시</a></li>
+          <li><a href="#about"      class="nav-link" data-nav="about">소개</a></li>
+          <li><a href="#contact"    class="nav-link" data-nav="contact">문의</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="다크/라이트 모드 전환">
+          <span class="icon-sun">☀</span>
+          <span class="icon-moon">🌙</span>
+        </button>
+        <button class="burger" id="burger" aria-label="메뉴 열기" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- ========== HERO ========== -->
+    <section class="section hero" id="home">
+      <div class="hero-bg">
+        <div class="hero-grid-overlay"></div>
+        <div class="hero-blob blob-1"></div>
+        <div class="hero-blob blob-2"></div>
+        <div class="hero-blob blob-3"></div>
+      </div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">🎓 AI 전문 교육 플랫폼</div>
+          <h1 class="hero-title">
+            <span class="text-gradient">AI 시대</span>를<br>준비하는 스마트 학습
+          </h1>
+          <p class="hero-desc">
+            인공지능의 기초부터 리터러시까지,<br>
+            전문가가 설계한 체계적 동영상 강의로 AI 역량을 키우세요.
+          </p>
+          <div class="hero-btns">
+            <a href="#ai-videos" class="btn btn-primary">강의 시작하기</a>
+            <a href="#about"     class="btn btn-ghost">더 알아보기</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat"><span class="stat-num">500+</span><span class="stat-lbl">수강생</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat"><span class="stat-num">50+</span><span class="stat-lbl">강의 영상</span></div>
+            <div class="stat-divider"></div>
+            <div class="stat"><span class="stat-num">98%</span><span class="stat-lbl">만족도</span></div>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-card hc1">
+            <div class="hc-icon">🤖</div>
+            <div class="hc-text"><strong>AI 기초</strong><span>12강</span></div>
+          </div>
+          <div class="hero-card hc2">
+            <div class="hc-icon">📊</div>
+            <div class="hc-text"><strong>머신러닝</strong><span>8강</span></div>
+          </div>
+          <div class="hero-card hc3">
+            <div class="hc-icon">💡</div>
+            <div class="hc-text"><strong>AI 리터러시</strong><span>12강</span></div>
+          </div>
+          <div class="hero-card hc4">
+            <div class="hc-icon">🎨</div>
+            <div class="hc-text"><strong>생성형 AI</strong><span>6강</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== COLOR PALETTE STRIP ========== -->
+    <div class="palette-strip" aria-hidden="true">
+      <div class="palette-chip" style="background:#0a1628"><span>Midnight Navy</span></div>
+      <div class="palette-chip" style="background:#1e3a8a"><span>Royal Blue</span></div>
+      <div class="palette-chip" style="background:#3b82f6"><span>Azure Blue</span></div>
+      <div class="palette-chip" style="background:#f59e0b"><span>Amber Gold</span></div>
+      <div class="palette-chip" style="background:#06b6d4"><span>Cyan Teal</span></div>
+    </div>
+
+    <!-- ========== FEATURES ========== -->
+    <section class="section features" id="features">
+      <div class="container">
+        <div class="section-hd">
+          <span class="badge">왜 AI EDU인가?</span>
+          <h2 class="section-title">최고의 AI 교육 경험</h2>
+          <p class="section-sub">업계 전문가와 함께하는 차별화된 온라인 AI 교육</p>
+        </div>
+        <div class="features-grid">
+          <div class="feat-card">
+            <div class="feat-icon">🤖</div>
+            <h3>전문 AI 교육</h3>
+            <p>현직 AI 전문가가 직접 설계한 커리큘럼으로 실무 중심의 강의를 제공합니다.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">📚</div>
+            <h3>체계적 학습</h3>
+            <p>기초부터 심화까지 단계적으로 구성된 학습 경로로 효율적인 학습이 가능합니다.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">🌍</div>
+            <h3>언제 어디서나</h3>
+            <p>PC·태블릿·모바일 등 모든 기기에서 편리하게 강의를 시청하세요.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-icon">💡</div>
+            <h3>AI 리터러시</h3>
+            <p>AI를 올바르게 이해하고 활용하는 AI 리터러시 역량을 함께 키웁니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== AI 동영상 ========== -->
+    <section class="section videos-section" id="ai-videos">
+      <div class="container">
+        <div class="section-hd">
+          <span class="badge">AI 학습</span>
+          <h2 class="section-title">AI 동영상 강의</h2>
+          <p class="section-sub">인공지능의 핵심 개념과 기술을 영상으로 배우세요</p>
+        </div>
+        <div class="video-grid" id="aiVideoGrid"></div>
+        <div class="pagination"  id="aiPagination"></div>
+      </div>
+    </section>
+
+    <!-- ========== AI 리터러시 ========== -->
+    <section class="section videos-section alt-bg" id="literacy">
+      <div class="container">
+        <div class="section-hd">
+          <span class="badge teal">AI 리터러시</span>
+          <h2 class="section-title">AI 리터러시 강의</h2>
+          <p class="section-sub">AI 시대를 살아가는 데 필요한 기본 소양을 키우세요</p>
+        </div>
+        <div class="video-grid" id="litVideoGrid"></div>
+        <div class="pagination"  id="litPagination"></div>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT ========== -->
+    <section class="section about" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-content">
+            <span class="badge">회사 소개</span>
+            <h2 class="section-title left">AI 교육의 새로운 기준</h2>
+            <p>AI EDU는 2024년에 설립된 AI 전문 교육 기업입니다. 누구나 AI를 이해하고 활용할 수 있는 세상을 만들기 위해 최고의 교육 콘텐츠를 제공합니다.</p>
+            <p>AI 기술의 빠른 발전 속에서, 학습자들이 AI를 도구로써 효과적으로 활용할 수 있도록 돕는 것이 우리의 사명입니다.</p>
+            <ul class="check-list">
+              <li>✅ 현직 AI 전문가 강사진</li>
+              <li>✅ 실무 중심 커리큘럼</li>
+              <li>✅ 지속적인 콘텐츠 업데이트</li>
+              <li>✅ 커뮤니티 학습 지원</li>
+            </ul>
+          </div>
+          <div class="about-stats">
+            <div class="about-stat"><span class="ast-num">2024</span><span class="ast-lbl">설립년도</span></div>
+            <div class="about-stat"><span class="ast-num">500+</span><span class="ast-lbl">수강생</span></div>
+            <div class="about-stat"><span class="ast-num">50+</span><span class="ast-lbl">강의 영상</span></div>
+            <div class="about-stat"><span class="ast-num">98%</span><span class="ast-lbl">만족도</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section class="section contact alt-bg" id="contact">
+      <div class="container">
+        <div class="section-hd">
+          <span class="badge">Contact</span>
+          <h2 class="section-title">문의하기</h2>
+          <p class="section-sub">궁금한 점이 있으시면 언제든지 연락주세요</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="ci-icon">📧</div>
+              <div><h4>이메일</h4><p>info@aiedu.co.kr</p></div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon">📞</div>
+              <div><h4>전화</h4><p>02-1234-5678</p></div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon">📍</div>
+              <div><h4>주소</h4><p>서울시 강남구 테헤란로 123</p></div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon">🕐</div>
+              <div><h4>운영시간</h4><p>평일 09:00 – 18:00</p></div>
+            </div>
+          </div>
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="cf-name">이름</label>
+                <input type="text" id="cf-name" name="name" placeholder="홍길동" required />
+              </div>
+              <div class="form-group">
+                <label for="cf-email">이메일</label>
+                <input type="email" id="cf-email" name="email" placeholder="example@mail.com" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="cf-subject">제목</label>
+              <input type="text" id="cf-subject" name="subject" placeholder="문의 제목을 입력하세요" required />
+            </div>
+            <div class="form-group">
+              <label for="cf-message">내용</label>
+              <textarea id="cf-message" name="message" rows="5" placeholder="문의 내용을 자세히 입력해 주세요." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">문의 보내기</button>
+            <p class="form-notice" id="formNotice"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="logo"><span class="logo-ai">AI</span><span class="logo-edu">EDU</span></a>
+          <p>AI 시대를 선도하는<br>전문 온라인 교육 플랫폼</p>
+          <div class="social-links">
+            <a href="#" aria-label="YouTube" class="social-btn">▶</a>
+            <a href="#" aria-label="Instagram" class="social-btn">📷</a>
+            <a href="#" aria-label="Blog" class="social-btn">📝</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>강의</h4>
+          <ul>
+            <li><a href="#ai-videos">AI 동영상</a></li>
+            <li><a href="#literacy">AI 리터러시</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>회사</h4>
+          <ul>
+            <li><a href="#about">소개</a></li>
+            <li><a href="#contact">문의</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>법적고지</h4>
+          <ul>
+            <li><a href="#">이용약관</a></li>
+            <li><a href="#">개인정보처리방침</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 AI EDU. All rights reserved.</p>
+        <div class="palette-dots" aria-hidden="true">
+          <span style="background:#0a1628"></span>
+          <span style="background:#1e3a8a"></span>
+          <span style="background:#3b82f6"></span>
+          <span style="background:#f59e0b"></span>
+          <span style="background:#06b6d4"></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== VIDEO MODAL ========== -->
+  <div class="modal-overlay" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal" role="document">
+      <button class="modal-close" id="modalClose" aria-label="닫기">✕</button>
+      <div class="modal-video-wrap">
+        <iframe id="modalIframe" src="" title="동영상 플레이어"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+      <div class="modal-body">
+        <span class="modal-category" id="modalCategory"></span>
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <p class="modal-desc" id="modalDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
