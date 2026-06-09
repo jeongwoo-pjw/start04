@@ -188,8 +188,19 @@ input, textarea { font-family: var(--font); }
   color: #fff;
   background: rgba(255,255,255,.06);
   backdrop-filter: blur(6px);
+  transition: var(--t);
 }
 .btn-ghost:hover { background: rgba(255,255,255,.15); border-color: #fff; }
+[data-theme="light"] .btn-ghost {
+  border-color: rgba(30,58,138,.4);
+  color: var(--royal);
+  background: rgba(30,58,138,.06);
+}
+[data-theme="light"] .btn-ghost:hover {
+  background: var(--royal);
+  border-color: var(--royal);
+  color: #fff;
+}
 .btn-full { width: 100%; }
 .btn-outline {
   border-color: var(--azure);
@@ -283,6 +294,10 @@ input, textarea { font-family: var(--font); }
   overflow: hidden;
   background: var(--midnight);
   padding-top: 68px;
+  transition: background var(--t);
+}
+[data-theme="light"] .hero {
+  background: linear-gradient(150deg, #dbeafe 0%, #eff6ff 45%, #e0f2fe 100%);
 }
 .hero .container {
   position: relative;
@@ -339,19 +354,41 @@ input, textarea { font-family: var(--font); }
   line-height: 1.15;
   letter-spacing: -.03em;
   margin-bottom: 1.5rem;
+  transition: color var(--t);
 }
 .hero-desc {
   font-size: 1.1rem;
   color: rgba(255,255,255,.72);
   margin-bottom: 2.5rem;
   line-height: 1.8;
+  transition: color var(--t);
 }
 .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
 .hero-stats { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
 .stat { display: flex; flex-direction: column; gap: .2rem; }
-.stat-num { font-size: 1.75rem; font-weight: 900; color: var(--gold-lt); line-height: 1; }
-.stat-lbl { font-size: .78rem; color: rgba(255,255,255,.55); }
-.stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,.2); }
+.stat-num { font-size: 1.75rem; font-weight: 900; color: var(--gold-lt); line-height: 1; transition: color var(--t); }
+.stat-lbl { font-size: .78rem; color: rgba(255,255,255,.55); transition: color var(--t); }
+.stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,.2); transition: background var(--t); }
+
+/* Hero 라이트 모드 */
+[data-theme="light"] .hero-badge {
+  background: rgba(30,58,138,.1);
+  border-color: rgba(30,58,138,.3);
+  color: var(--royal);
+}
+[data-theme="light"] .hero-title { color: var(--midnight); }
+[data-theme="light"] .hero-desc  { color: var(--txt2); }
+[data-theme="light"] .stat-num   { color: var(--royal); }
+[data-theme="light"] .stat-lbl   { color: var(--txt2); }
+[data-theme="light"] .stat-divider { background: rgba(30,58,138,.2); }
+[data-theme="light"] .hero-grid-overlay {
+  background-image:
+    linear-gradient(rgba(30,58,138,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,58,138,.05) 1px, transparent 1px);
+}
+[data-theme="light"] .blob-1 { background: var(--royal); opacity: .18; }
+[data-theme="light"] .blob-2 { background: var(--teal);  opacity: .14; }
+[data-theme="light"] .blob-3 { background: var(--azure); opacity: .12; }
 
 /* Hero visual cards */
 .hero-visual {
@@ -374,11 +411,18 @@ input, textarea { font-family: var(--font); }
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 8px 32px rgba(0,0,0,.35);
   animation: cardf 6s ease-in-out infinite;
+  transition: background var(--t), border-color var(--t), box-shadow var(--t);
 }
 .hero-card .hc-icon { font-size: 2rem; }
 .hero-card .hc-text { display: flex; flex-direction: column; }
-.hero-card .hc-text strong { color: #fff; font-size: .95rem; }
+.hero-card .hc-text strong { color: #fff; font-size: .95rem; transition: color var(--t); }
 .hero-card .hc-text span  { color: var(--azure-lt); font-size: .78rem; font-weight: 600; }
+[data-theme="light"] .hero-card {
+  background: rgba(255,255,255,.82);
+  border-color: rgba(30,58,138,.18);
+  box-shadow: 0 8px 32px rgba(30,58,138,.12);
+}
+[data-theme="light"] .hero-card .hc-text strong { color: var(--midnight); }
 .hc1 { top: 10%;  left: 0%;  animation-delay: 0s;   }
 .hc2 { top: 35%;  right: 0%; animation-delay: 1.5s; }
 .hc3 { bottom: 10%; left: 8%; animation-delay: 1s;  }
@@ -387,36 +431,6 @@ input, textarea { font-family: var(--font); }
   0%,100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
 }
-
-/* ============================================================
-   COLOR PALETTE STRIP
-   ============================================================ */
-.palette-strip {
-  display: flex;
-  height: 56px;
-  overflow: hidden;
-}
-.palette-chip {
-  flex: 1;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: .5rem;
-  transition: flex var(--t);
-  cursor: default;
-}
-.palette-chip:hover { flex: 2.5; }
-.palette-chip span {
-  font-size: .65rem;
-  font-weight: 700;
-  color: rgba(255,255,255,.9);
-  opacity: 0;
-  white-space: nowrap;
-  transition: opacity var(--t);
-  text-shadow: 0 1px 3px rgba(0,0,0,.5);
-}
-.palette-chip:hover span { opacity: 1; }
 
 /* ============================================================
    FEATURES
