@@ -1,0 +1,14 @@
+{
+  "name": "start04",
+  "version": "1.0.0",
+  "description": "AI EDU - AI 전문 교육 온라인 플랫폼",
+  "homepage": "https://jeongwoo-pjw.github.io/start04",
+  "private": true,
+  "scripts": {
+    "predeploy": "node scripts/predeploy.js",
+    "deploy": "gh-pages -d dist --nojekyll --message \"Deploy to gh-pages\""
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}
