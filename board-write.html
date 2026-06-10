@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>글쓰기 | AI EDU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/board.css" />
+</head>
+<body class="page-wrap">
+
+  <header class="simple-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" style="text-decoration:none">
+        <span class="logo-ai">AI</span><span class="logo-edu">EDU</span>
+      </a>
+      <nav class="header-nav">
+        <a href="board.html?type=notice" class="board-nav-link">📢 공지</a>
+        <a href="board.html?type=qna"    class="board-nav-link">💬 Q&amp;A</a>
+        <a href="board.html?type=general" class="board-nav-link">📋 게시판</a>
+        <button class="theme-btn" id="themeToggle" title="테마 전환">☀</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="write-wrap">
+    <div class="write-header">
+      <span class="board-type-chip" id="boardLabel"></span>
+      <h1 id="pageTitle">글쓰기</h1>
+    </div>
+
+    <form class="write-form" id="writeForm">
+      <div>
+        <label for="postTitle">제목</label>
+        <input type="text" id="postTitle" placeholder="제목을 입력하세요" required maxlength="100" />
+      </div>
+      <div>
+        <label for="postContent">내용</label>
+        <textarea id="postContent" placeholder="내용을 입력하세요" required></textarea>
+      </div>
+      <div class="write-form-footer">
+        <span class="write-msg" id="writeMsg"></span>
+        <a href="board.html" class="btn btn-ghost">취소</a>
+        <button type="submit" class="btn btn-primary" id="submitBtn">등록</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-client.js"></script>
+  <script src="assets/js/board-write.js"></script>
+  <script>
+    const toggle = document.getElementById('themeToggle')
+    const html = document.documentElement
+    const saved = localStorage.getItem('theme') || 'dark'
+    html.setAttribute('data-theme', saved)
+    toggle.textContent = saved === 'dark' ? '☀' : '🌙'
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+      html.setAttribute('data-theme', next)
+      localStorage.setItem('theme', next)
+      toggle.textContent = next === 'dark' ? '☀' : '🌙'
+    })
+  </script>
+</body>
+</html>
