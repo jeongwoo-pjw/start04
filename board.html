@@ -19,7 +19,10 @@
       </a>
       <nav class="header-nav">
         <a href="index.html" class="btn btn-sm btn-ghost">홈</a>
-        <div id="userInfo"></div>
+        <a href="board.html?type=notice" id="nav-notice" class="board-nav-link">📢 공지</a>
+        <a href="board.html?type=qna"    id="nav-qna"    class="board-nav-link">💬 Q&amp;A</a>
+        <a href="board.html?type=general" id="nav-general" class="board-nav-link">📋 게시판</a>
+        <div id="userInfo" style="display:flex;align-items:center;gap:.5rem"></div>
         <button class="theme-btn" id="themeToggle" title="테마 전환">☀</button>
       </nav>
     </div>
@@ -27,11 +30,9 @@
 
   <div class="board-wrap">
     <div class="board-top">
-      <h1>📋 게시판</h1>
+      <h1 id="boardTitle">게시판</h1>
       <div class="board-top-right">
-        <div id="writeBtnWrap" class="hidden">
-          <a href="board-write.html" class="btn btn-primary btn-sm">✏ 글쓰기</a>
-        </div>
+        <div id="writeBtnWrap"></div>
       </div>
     </div>
 
@@ -51,7 +52,7 @@
 
     <div id="emptyMsg" class="empty-msg hidden">
       <p style="font-size:2rem">📝</p>
-      <p>아직 게시글이 없습니다. 첫 글을 작성해보세요!</p>
+      <p></p>
     </div>
 
     <div class="pagination" id="pagination"></div>

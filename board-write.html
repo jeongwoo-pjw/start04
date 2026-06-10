@@ -18,14 +18,19 @@
         <span class="logo-ai">AI</span><span class="logo-edu">EDU</span>
       </a>
       <nav class="header-nav">
-        <a href="board.html" class="btn btn-sm btn-ghost">← 게시판</a>
+        <a href="board.html?type=notice" class="board-nav-link">📢 공지</a>
+        <a href="board.html?type=qna"    class="board-nav-link">💬 Q&amp;A</a>
+        <a href="board.html?type=general" class="board-nav-link">📋 게시판</a>
         <button class="theme-btn" id="themeToggle" title="테마 전환">☀</button>
       </nav>
     </div>
   </header>
 
   <div class="write-wrap">
-    <h1 id="pageTitle">글쓰기</h1>
+    <div class="write-header">
+      <span class="board-type-chip" id="boardLabel"></span>
+      <h1 id="pageTitle">글쓰기</h1>
+    </div>
 
     <form class="write-form" id="writeForm">
       <div>

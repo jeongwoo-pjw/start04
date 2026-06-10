@@ -18,7 +18,9 @@
         <span class="logo-ai">AI</span><span class="logo-edu">EDU</span>
       </a>
       <nav class="header-nav">
-        <a href="board.html" class="btn btn-sm btn-ghost">← 목록</a>
+        <a href="board.html?type=notice" class="board-nav-link">📢 공지</a>
+        <a href="board.html?type=qna"    class="board-nav-link">💬 Q&amp;A</a>
+        <a href="board.html?type=general" class="board-nav-link">📋 게시판</a>
         <button class="theme-btn" id="themeToggle" title="테마 전환">☀</button>
       </nav>
     </div>
@@ -26,6 +28,7 @@
 
   <div class="detail-wrap">
     <div class="detail-header">
+      <span class="board-type-chip" id="boardBadge"></span>
       <h1 id="postTitle">불러오는 중...</h1>
       <div class="detail-meta" id="postMeta"></div>
     </div>
@@ -35,7 +38,7 @@
     <div class="detail-content" id="postContent"></div>
 
     <div class="detail-actions">
-      <a href="board.html" class="btn btn-ghost btn-sm">목록으로</a>
+      <a href="board.html" class="btn btn-ghost btn-sm" id="backBtn">← 목록</a>
       <div id="postActions" style="display:flex;gap:.75rem;margin-left:auto"></div>
     </div>
   </div>

@@ -390,3 +390,42 @@
   transition: color var(--t);
 }
 .theme-btn:hover { color: var(--txt); }
+
+/* ---- Board nav links ---- */
+.board-nav-link {
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--txt2);
+  text-decoration: none;
+  padding: .3rem .6rem;
+  border-radius: var(--r);
+  transition: all var(--t);
+}
+.board-nav-link:hover { color: var(--azure); background: var(--bg3); }
+.nav-board-active { color: var(--azure) !important; background: var(--bg3); }
+
+/* ---- Board type chip ---- */
+.board-type-chip {
+  display: inline-block;
+  font-size: .75rem;
+  font-weight: 600;
+  padding: .2rem .65rem;
+  border-radius: var(--r-pill);
+  background: rgba(59,130,246,.12);
+  color: var(--azure);
+  margin-bottom: .6rem;
+}
+
+/* ---- Admin-only badge ---- */
+.admin-only-badge {
+  font-size: .8rem;
+  color: var(--txt3);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: .35rem .8rem;
+  border-radius: var(--r);
+}
+
+/* ---- Write header ---- */
+.write-header { margin-bottom: 1.25rem; }
+.write-header h1 { font-size: 1.5rem; font-weight: 700; color: var(--txt); margin: 0; }

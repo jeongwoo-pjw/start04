@@ -4,6 +4,25 @@
   let currentPage = 1
   let totalCount = 0
   let currentUser = null
+  let userIsAdmin = false
+
+  const params = new URLSearchParams(location.search)
+  const boardType = params.get('type') || 'general'
+
+  const BOARDS = {
+    notice:  { label: '📢 공지사항', adminOnly: true,  empty: '등록된 공지사항이 없습니다.' },
+    qna:     { label: '💬 Q&A',     adminOnly: false, empty: '아직 질문이 없습니다. 첫 질문을 남겨보세요!' },
+    general: { label: '📋 게시판',   adminOnly: false, empty: '아직 게시글이 없습니다. 첫 글을 작성해보세요!' }
+  }
+  const board = BOARDS[boardType] || BOARDS.general
+
+  // 헤더 타이틀 설정
+  document.getElementById('boardTitle').textContent = board.label
+  document.title = board.label.replace(/^\S+\s/, '') + ' | AI EDU'
+
+  // 현재 활성 nav 하이라이트
+  const activeNav = document.getElementById('nav-' + boardType)
+  if (activeNav) activeNav.classList.add('nav-board-active')
 
   const listEl = document.getElementById('postList')
   const paginationEl = document.getElementById('pagination')
@@ -11,12 +30,21 @@
   const userInfoEl = document.getElementById('userInfo')
   const emptyEl = document.getElementById('emptyMsg')
 
+  async function checkAdmin(userId) {
+    const { data } = await window.sb
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', userId)
+      .single()
+    return data?.is_admin === true
+  }
+
   async function init() {
     const { data: { session } } = await window.sb.auth.getSession()
     currentUser = session?.user ?? null
 
     if (currentUser) {
-      writeBtnWrap.classList.remove('hidden')
+      userIsAdmin = await checkAdmin(currentUser.id)
       userInfoEl.innerHTML = `
         <span class="user-email">${currentUser.email}</span>
         <button class="btn btn-sm btn-ghost" id="logoutBtn">로그아웃</button>
@@ -25,8 +53,20 @@
         await window.sb.auth.signOut()
         location.reload()
       })
+
+      const canWrite = board.adminOnly ? userIsAdmin : true
+      if (canWrite) {
+        writeBtnWrap.innerHTML = `<a href="board-write.html?type=${boardType}" class="btn btn-primary btn-sm">✏ 글쓰기</a>`
+      } else {
+        writeBtnWrap.innerHTML = `<span class="admin-only-badge">🔒 관리자만 작성 가능</span>`
+      }
     } else {
       userInfoEl.innerHTML = `<a href="login.html" class="btn btn-sm btn-outline">로그인</a>`
+      if (!board.adminOnly) {
+        writeBtnWrap.innerHTML = `<a href="login.html" class="btn btn-sm btn-ghost">로그인 후 작성 가능</a>`
+      } else {
+        writeBtnWrap.innerHTML = `<span class="admin-only-badge">🔒 관리자만 작성 가능</span>`
+      }
     }
 
     await loadPosts()
@@ -41,6 +81,7 @@
     const { data, count, error } = await window.sb
       .from('posts')
       .select('id, title, author_email, created_at', { count: 'exact' })
+      .eq('board_type', boardType)
       .order('created_at', { ascending: false })
       .range(from, to)
 
@@ -53,6 +94,7 @@
 
     if (!data.length) {
       listEl.innerHTML = ''
+      emptyEl.querySelector('p:last-child').textContent = board.empty
       emptyEl.classList.remove('hidden')
       paginationEl.innerHTML = ''
       return
@@ -63,9 +105,11 @@
       const num = totalCount - from - idx
       const date = new Date(post.created_at).toLocaleDateString('ko-KR')
       return `
-        <tr class="post-row" data-id="${post.id}">
+        <tr class="post-row">
           <td class="td-num">${num}</td>
-          <td class="td-title"><a href="board-detail.html?id=${post.id}">${escHtml(post.title)}</a></td>
+          <td class="td-title">
+            <a href="board-detail.html?id=${post.id}&type=${boardType}">${escHtml(post.title)}</a>
+          </td>
           <td class="td-author">${escHtml(post.author_email.split('@')[0])}</td>
           <td class="td-date">${date}</td>
         </tr>
