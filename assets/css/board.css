@@ -429,3 +429,39 @@
 /* ---- Write header ---- */
 .write-header { margin-bottom: 1.25rem; }
 .write-header h1 { font-size: 1.5rem; font-weight: 700; color: var(--txt); margin: 0; }
+
+/* ---- 소셜 로그인 ---- */
+.social-divider {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  color: var(--txt3);
+  font-size: .8rem;
+  margin: .25rem 0;
+}
+.social-divider::before,
+.social-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.btn-kakao {
+  width: 100%;
+  background: #FEE500;
+  color: #191919;
+  border: none;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .7rem 1rem;
+  border-radius: var(--r);
+  font-size: .95rem;
+  cursor: pointer;
+  transition: background var(--t), opacity var(--t);
+}
+.btn-kakao:hover    { background: #F0D900; }
+.btn-kakao:disabled { opacity: .6; cursor: not-allowed; }
