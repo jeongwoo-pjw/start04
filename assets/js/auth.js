@@ -46,10 +46,12 @@
   })
 
   // ── 카카오 로그인 ──────────────────────────────
-  document.getElementById('kakaoLoginBtn').addEventListener('click', async () => {
-    const btn = document.getElementById('kakaoLoginBtn')
-    btn.disabled = true
-    btn.textContent = '카카오 연결 중...'
+  const kakaoBtn = document.getElementById('kakaoLoginBtn')
+  const msgSocial = document.getElementById('msgSocial')
+
+  kakaoBtn.addEventListener('click', async () => {
+    kakaoBtn.disabled = true
+    kakaoBtn.textContent = '카카오 연결 중...'
 
     const { error } = await window.sb.auth.signInWithOAuth({
       provider: 'kakao',
@@ -58,20 +60,18 @@
       }
     })
 
-    // signInWithOAuth는 성공 시 즉시 리다이렉트 → 아래는 오류일 때만 실행됨
-    btn.disabled = false
-    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+    // 성공 시 즉시 리다이렉트 → 아래는 오류일 때만 실행됨
+    kakaoBtn.disabled = false
+    kakaoBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
       <path d="M9 1.5C4.86 1.5 1.5 4.19 1.5 7.5c0 2.12 1.3 3.98 3.27 5.09L4 15l3.35-1.8C7.75 13.4 8.37 13.5 9 13.5c4.14 0 7.5-2.69 7.5-6S13.14 1.5 9 1.5z" fill="#191919"/>
     </svg> 카카오로 로그인`
 
     if (error) {
-      const isDisabled = error.message?.toLowerCase().includes('provider')
-        || error.status === 400
-      showMsg(msgLogin,
+      const isDisabled = error.message?.toLowerCase().includes('provider') || error.status === 400
+      showMsg(msgSocial,
         isDisabled
-          ? '카카오 로그인이 비활성화 상태입니다. Supabase → Authentication → Providers → Kakao를 확인해주세요.'
-          : `카카오 오류: ${error.message}`,
-        true
+          ? '카카오 로그인이 비활성화 상태입니다. Supabase → Providers → Kakao 설정을 확인해주세요.'
+          : `카카오 오류: ${error.message}`
       )
     }
   })
