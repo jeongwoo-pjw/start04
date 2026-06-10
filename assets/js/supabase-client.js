@@ -1,4 +1,4 @@
 const SUPABASE_URL = 'https://poudbyqhmmdqrxoandhf.supabase.co'
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBvdWRieXFobW1kcXJ4b2FuZGhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwNjYyNTEsImV4cCI6MjA5NjY0MjI1MX0.mTmXTSntnCvlfSiQdErRQfzTkTuQCvy-9nYajcAz5Ec'
+const SUPABASE_ANON_KEY = 'sb_publishable_mrcFpEOLM6s0BlaBaB9CoA_cE_xrrKE'
 
 window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
