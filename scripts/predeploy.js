@@ -13,18 +13,33 @@ fs.rmSync(DIST, { recursive: true, force: true });
   fs.mkdirSync(path.join(DIST, d), { recursive: true });
 });
 
-// 파일 복사
+// 복사할 파일 목록
 const copies = [
-  ['index.html',          'index.html'],
-  ['assets/css/main.css', 'assets/css/main.css'],
-  ['assets/js/app.js',    'assets/js/app.js'],
+  // HTML
+  ['index.html',               'index.html'],
+  ['login.html',               'login.html'],
+  ['board.html',               'board.html'],
+  ['board-write.html',         'board-write.html'],
+  ['board-detail.html',        'board-detail.html'],
+  ['README.md',                'README.md'],
+  // CSS
+  ['assets/css/main.css',      'assets/css/main.css'],
+  ['assets/css/board.css',     'assets/css/board.css'],
+  // JS
+  ['assets/js/app.js',         'assets/js/app.js'],
+  ['assets/js/supabase-client.js', 'assets/js/supabase-client.js'],
+  ['assets/js/auth.js',        'assets/js/auth.js'],
+  ['assets/js/board.js',       'assets/js/board.js'],
+  ['assets/js/board-write.js', 'assets/js/board-write.js'],
+  ['assets/js/board-detail.js','assets/js/board-detail.js'],
 ];
+
 copies.forEach(([src, dest]) => {
   fs.copyFileSync(path.join(ROOT, src), path.join(DIST, dest));
   console.log(`  copied: ${src}`);
 });
 
-// Jekyll 비활성화 (.nojekyll)
+// Jekyll 비활성화
 fs.writeFileSync(path.join(DIST, '.nojekyll'), '');
 
 console.log('✅ dist/ 준비 완료 → gh-pages 배포 시작');
