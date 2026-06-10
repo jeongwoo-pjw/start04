@@ -50,13 +50,6 @@
         </div>
         <span class="auth-msg" id="msgLogin"></span>
         <button type="submit" class="btn btn-primary">로그인</button>
-        <div class="social-divider"><span>또는</span></div>
-        <button type="button" class="btn btn-kakao" id="kakaoLoginBtn">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-            <path d="M9 1.5C4.86 1.5 1.5 4.19 1.5 7.5c0 2.12 1.3 3.98 3.27 5.09L4 15l3.35-1.8C7.75 13.4 8.37 13.5 9 13.5c4.14 0 7.5-2.69 7.5-6S13.14 1.5 9 1.5z" fill="#191919"/>
-          </svg>
-          카카오로 로그인
-        </button>
       </form>
 
       <!-- 회원가입 폼 -->
@@ -76,6 +69,17 @@
         <span class="auth-msg" id="msgSignup"></span>
         <button type="submit" class="btn btn-primary">회원가입</button>
       </form>
+
+      <!-- 소셜 로그인 — 폼 바깥, 항상 표시 -->
+      <div class="social-divider"><span>또는</span></div>
+      <span class="auth-msg" id="msgSocial"></span>
+      <button type="button" class="btn btn-kakao" id="kakaoLoginBtn">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M9 1.5C4.86 1.5 1.5 4.19 1.5 7.5c0 2.12 1.3 3.98 3.27 5.09L4 15l3.35-1.8C7.75 13.4 8.37 13.5 9 13.5c4.14 0 7.5-2.69 7.5-6S13.14 1.5 9 1.5z" fill="#191919"/>
+        </svg>
+        카카오로 로그인
+      </button>
+
     </div>
   </div>
 
@@ -83,7 +87,6 @@
   <script src="assets/js/supabase-client.js"></script>
   <script src="assets/js/auth.js"></script>
   <script>
-    // 테마 토글
     const toggle = document.getElementById('themeToggle')
     const html = document.documentElement
     const saved = localStorage.getItem('theme') || 'dark'
