@@ -30,6 +30,8 @@
       </nav>
 
       <div class="header-actions">
+        <a href="board.html" class="nav-link" style="font-size:.9rem;font-weight:500;text-decoration:none;color:var(--txt2)">게시판</a>
+        <div id="authNavWrap" style="display:flex;align-items:center;gap:.5rem"></div>
         <button class="theme-toggle" id="themeToggle" aria-label="다크/라이트 모드 전환">
           <span class="icon-sun">☀</span>
           <span class="icon-moon">🌙</span>
@@ -302,5 +304,27 @@
   </div>
 
   <script src="assets/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-client.js"></script>
+  <script>
+    // 인증 상태에 따라 헤더 버튼 렌더링
+    (async function () {
+      const wrap = document.getElementById('authNavWrap')
+      if (!wrap) return
+      const { data: { session } } = await window.sb.auth.getSession()
+      if (session) {
+        wrap.innerHTML = `
+          <span style="font-size:.8rem;color:var(--txt2)">${session.user.email.split('@')[0]}</span>
+          <button id="mainLogout" style="font-size:.8rem;padding:.3rem .7rem;border:1px solid var(--border);border-radius:.375rem;background:transparent;color:var(--txt2);cursor:pointer">로그아웃</button>
+        `
+        document.getElementById('mainLogout').addEventListener('click', async () => {
+          await window.sb.auth.signOut()
+          location.reload()
+        })
+      } else {
+        wrap.innerHTML = `<a href="login.html" style="font-size:.9rem;font-weight:500;text-decoration:none;color:var(--azure)">로그인</a>`
+      }
+    })()
+  </script>
 </body>
 </html>

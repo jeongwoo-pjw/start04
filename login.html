@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>로그인 | AI EDU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/board.css" />
+</head>
+<body class="page-wrap">
+
+  <header class="simple-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" style="text-decoration:none">
+        <span class="logo-ai">AI</span><span class="logo-edu">EDU</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html" class="btn btn-sm btn-ghost">홈</a>
+        <a href="board.html" class="btn btn-sm btn-ghost">게시판</a>
+        <button class="theme-btn" id="themeToggle" title="테마 전환">☀</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <a href="index.html"><span class="logo-ai">AI</span><span class="logo-edu">EDU</span></a>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin">로그인</button>
+        <button class="auth-tab" id="tabSignup">회원가입</button>
+      </div>
+
+      <!-- 로그인 폼 -->
+      <form class="auth-form" id="formLogin">
+        <div class="form-group">
+          <label for="loginEmail">이메일</label>
+          <input type="email" id="loginEmail" placeholder="example@email.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">비밀번호</label>
+          <input type="password" id="loginPassword" placeholder="비밀번호 입력" required autocomplete="current-password" />
+        </div>
+        <span class="auth-msg" id="msgLogin"></span>
+        <button type="submit" class="btn btn-primary">로그인</button>
+      </form>
+
+      <!-- 회원가입 폼 -->
+      <form class="auth-form hidden" id="formSignup">
+        <div class="form-group">
+          <label for="signupEmail">이메일</label>
+          <input type="email" id="signupEmail" placeholder="example@email.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">비밀번호</label>
+          <input type="password" id="signupPassword" placeholder="6자 이상" required autocomplete="new-password" />
+        </div>
+        <div class="form-group">
+          <label for="signupConfirm">비밀번호 확인</label>
+          <input type="password" id="signupConfirm" placeholder="비밀번호 재입력" required autocomplete="new-password" />
+        </div>
+        <span class="auth-msg" id="msgSignup"></span>
+        <button type="submit" class="btn btn-primary">회원가입</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-client.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script>
+    // 테마 토글
+    const toggle = document.getElementById('themeToggle')
+    const html = document.documentElement
+    const saved = localStorage.getItem('theme') || 'dark'
+    html.setAttribute('data-theme', saved)
+    toggle.textContent = saved === 'dark' ? '☀' : '🌙'
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+      html.setAttribute('data-theme', next)
+      localStorage.setItem('theme', next)
+      toggle.textContent = next === 'dark' ? '☀' : '🌙'
+    })
+  </script>
+</body>
+</html>

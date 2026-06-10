@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>게시글 | AI EDU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/board.css" />
+</head>
+<body class="page-wrap">
+
+  <header class="simple-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" style="text-decoration:none">
+        <span class="logo-ai">AI</span><span class="logo-edu">EDU</span>
+      </a>
+      <nav class="header-nav">
+        <a href="board.html" class="btn btn-sm btn-ghost">← 목록</a>
+        <button class="theme-btn" id="themeToggle" title="테마 전환">☀</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="detail-wrap">
+    <div class="detail-header">
+      <h1 id="postTitle">불러오는 중...</h1>
+      <div class="detail-meta" id="postMeta"></div>
+    </div>
+
+    <hr class="detail-divider" />
+
+    <div class="detail-content" id="postContent"></div>
+
+    <div class="detail-actions">
+      <a href="board.html" class="btn btn-ghost btn-sm">목록으로</a>
+      <div id="postActions" style="display:flex;gap:.75rem;margin-left:auto"></div>
+    </div>
+  </div>
+
+  <!-- 삭제 확인 모달 -->
+  <div class="modal-backdrop hidden" id="deleteModal">
+    <div class="confirm-modal">
+      <h3>게시글 삭제</h3>
+      <p>이 게시글을 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?</p>
+      <div class="confirm-modal-btns">
+        <button class="btn btn-ghost btn-sm" id="cancelDelete">취소</button>
+        <button class="btn btn-danger btn-sm" id="confirmDelete">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-client.js"></script>
+  <script src="assets/js/board-detail.js"></script>
+  <script>
+    const toggle = document.getElementById('themeToggle')
+    const html = document.documentElement
+    const saved = localStorage.getItem('theme') || 'dark'
+    html.setAttribute('data-theme', saved)
+    toggle.textContent = saved === 'dark' ? '☀' : '🌙'
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+      html.setAttribute('data-theme', next)
+      localStorage.setItem('theme', next)
+      toggle.textContent = next === 'dark' ? '☀' : '🌙'
+    })
+  </script>
+</body>
+</html>

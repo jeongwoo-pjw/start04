@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>게시판 | AI EDU</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/board.css" />
+</head>
+<body class="page-wrap">
+
+  <header class="simple-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo" style="text-decoration:none">
+        <span class="logo-ai">AI</span><span class="logo-edu">EDU</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html" class="btn btn-sm btn-ghost">홈</a>
+        <div id="userInfo"></div>
+        <button class="theme-btn" id="themeToggle" title="테마 전환">☀</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="board-wrap">
+    <div class="board-top">
+      <h1>📋 게시판</h1>
+      <div class="board-top-right">
+        <div id="writeBtnWrap" class="hidden">
+          <a href="board-write.html" class="btn btn-primary btn-sm">✏ 글쓰기</a>
+        </div>
+      </div>
+    </div>
+
+    <table class="post-table" aria-label="게시글 목록">
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>날짜</th>
+        </tr>
+      </thead>
+      <tbody id="postList">
+        <tr><td colspan="4" class="loading-row">불러오는 중...</td></tr>
+      </tbody>
+    </table>
+
+    <div id="emptyMsg" class="empty-msg hidden">
+      <p style="font-size:2rem">📝</p>
+      <p>아직 게시글이 없습니다. 첫 글을 작성해보세요!</p>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-client.js"></script>
+  <script src="assets/js/board.js"></script>
+  <script>
+    const toggle = document.getElementById('themeToggle')
+    const html = document.documentElement
+    const saved = localStorage.getItem('theme') || 'dark'
+    html.setAttribute('data-theme', saved)
+    toggle.textContent = saved === 'dark' ? '☀' : '🌙'
+    toggle.addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+      html.setAttribute('data-theme', next)
+      localStorage.setItem('theme', next)
+      toggle.textContent = next === 'dark' ? '☀' : '🌙'
+    })
+  </script>
+</body>
+</html>
