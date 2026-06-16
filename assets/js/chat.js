@@ -1,13 +1,13 @@
 ;(function () {
   'use strict'
 
+  const EDGE_URL = 'https://poudbyqhmmdqrxoandhf.supabase.co/functions/v1/ai-chat'
+
   const SYSTEM_PROMPT =
     'You are the AI learning assistant for AI EDU platform. ' +
     'Answer questions about AI education, machine learning, deep learning, and AI literacy in Korean. ' +
     'Keep answers concise and friendly.'
 
-  let solarKey  = null
-  let openaiKey = null
   let activeModel = 'solar'   // 'solar' | 'openai'
   let messages  = []
   let isLoading = false
@@ -20,29 +20,6 @@
   const typing     = document.getElementById('chatTyping')
   const errorEl    = document.getElementById('chatError')
   const switchWrap = document.getElementById('chatModelSwitch')
-
-  // ── API 키 로드 ───────────────────────────────────────────
-  async function loadApiKeys () {
-    try {
-      const { data } = await window.sb
-        .from('app_settings')
-        .select('key, value')
-        .in('key', ['solar_api_key', 'openai_api_key'])
-      if (data) {
-        data.forEach(row => {
-          if (row.key === 'solar_api_key'  && row.value) solarKey  = row.value
-          if (row.key === 'openai_api_key' && row.value) openaiKey = row.value
-        })
-      }
-      // 키가 없는 모델은 버튼 비활성화
-      if (!solarKey)  switchWrap.querySelector('[data-model="solar"]').disabled  = true
-      if (!openaiKey) switchWrap.querySelector('[data-model="openai"]').disabled = true
-      // Solar 키 없으면 OpenAI로 기본 전환
-      if (!solarKey && openaiKey) setModel('openai')
-    } catch (e) {
-      console.warn('[Chat] API 키 로드 실패:', e)
-    }
-  }
 
   // ── 모델 전환 ─────────────────────────────────────────────
   function setModel (model) {
@@ -102,46 +79,18 @@
     }
   }
 
-  // ── API 호출 ──────────────────────────────────────────────
-  async function callSolar (history) {
-    const res = await fetch('https://api.upstage.ai/v1/chat/completions', {
+  // ── API 호출 (Edge Function 프록시) ──────────────────────
+  async function callAI (history) {
+    const res = await fetch(EDGE_URL, {
       method: 'POST',
-      headers: {
-        Authorization:  `Bearer ${solarKey}`,
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'solar-pro',
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history],
-        max_tokens: 700
+        model: activeModel,
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history]
       })
     })
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}))
-      throw new Error(err.error?.message || `Solar HTTP ${res.status}`)
-    }
     const data = await res.json()
-    return data.choices?.[0]?.message?.content?.trim()
-  }
-
-  async function callOpenAI (history) {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        Authorization:  `Bearer ${openaiKey}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history],
-        max_tokens: 700
-      })
-    })
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}))
-      throw new Error(err.error?.message || `OpenAI HTTP ${res.status}`)
-    }
-    const data = await res.json()
+    if (!res.ok) throw new Error(data.error?.message || `HTTP ${res.status}`)
     return data.choices?.[0]?.message?.content?.trim()
   }
 
@@ -149,12 +98,6 @@
   async function send () {
     const text = input.value.trim()
     if (!text || isLoading) return
-
-    const key = activeModel === 'solar' ? solarKey : openaiKey
-    if (!key) {
-      errorEl.textContent = '선택한 모델의 API 키가 없습니다.'
-      return
-    }
 
     errorEl.textContent = ''
     input.value = ''
@@ -165,11 +108,7 @@
     setTyping(true)
 
     try {
-      const history = messages.slice(-12)
-      const reply = activeModel === 'solar'
-        ? await callSolar(history)
-        : await callOpenAI(history)
-
+      const reply = await callAI(messages.slice(-12))
       setTyping(false)
       appendMsg('assistant', reply || '답변을 생성할 수 없습니다. 다시 시도해 주세요.')
     } catch (e) {
@@ -202,6 +141,4 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && popup.classList.contains('open')) togglePopup()
   })
-
-  loadApiKeys()
 })()
