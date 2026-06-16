@@ -127,7 +127,9 @@
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error?.message || `HTTP ${res.status}`)
-    return data.choices?.[0]?.message?.content?.trim()
+    const reply = data.choices?.[0]?.message?.content?.trim()
+    if (!reply) throw new Error('[Debug] ' + JSON.stringify(data).slice(0, 200))
+    return reply
   }
 
   // ── 전송 ─────────────────────────────────────────────────
