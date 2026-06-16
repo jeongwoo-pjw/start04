@@ -1,17 +1,19 @@
 ;(function () {
   'use strict'
 
-  const EDGE_URL  = 'https://poudbyqhmmdqrxoandhf.supabase.co/functions/v1/ai-chat'
-  const ANON_KEY  = 'sb_publishable_mrcFpEOLM6s0BlaBaB9CoA_cE_xrrKE'
+  // OpenAI 는 CORS 문제로 Edge Function 프록시 경유
+  const EDGE_URL = 'https://poudbyqhmmdqrxoandhf.supabase.co/functions/v1/ai-chat'
+  const ANON_KEY = 'sb_publishable_mrcFpEOLM6s0BlaBaB9CoA_cE_xrrKE'
 
   const SYSTEM_PROMPT =
     'You are the AI learning assistant for AI EDU platform. ' +
     'Answer questions about AI education, machine learning, deep learning, and AI literacy in Korean. ' +
     'Keep answers concise and friendly.'
 
-  let activeModel = 'solar'   // 'solar' | 'openai'
-  let messages  = []
-  let isLoading = false
+  let solarKey    = null
+  let activeModel = 'solar'
+  let messages    = []
+  let isLoading   = false
 
   const fab        = document.getElementById('chatFab')
   const popup      = document.getElementById('chatPopup')
@@ -22,6 +24,20 @@
   const errorEl    = document.getElementById('chatError')
   const switchWrap = document.getElementById('chatModelSwitch')
   const tooltip    = document.getElementById('chatTooltip')
+
+  // ── Solar API 키 로드 (Supabase) ──────────────────────────
+  async function loadSolarKey () {
+    try {
+      const { data } = await window.sb
+        .from('app_settings')
+        .select('value')
+        .eq('key', 'solar_api_key')
+        .single()
+      if (data?.value) solarKey = data.value
+    } catch (e) {
+      console.warn('[Chat] Solar 키 로드 실패:', e)
+    }
+  }
 
   // ── 모델 전환 ─────────────────────────────────────────────
   function setModel (model) {
@@ -48,18 +64,11 @@
 
   function appendMsg (role, text) {
     messages.push({ role, content: text })
-
     const div = document.createElement('div')
     div.className = 'chat-msg ' + (role === 'user' ? 'user' : 'bot')
-
-    if (role === 'user') {
-      div.innerHTML = `<div class="chat-bubble">${escHtml(text)}</div>`
-    } else {
-      div.innerHTML = `
-        <div class="chat-avatar">🤖</div>
-        <div class="chat-bubble">${escHtml(text)}</div>`
-    }
-
+    div.innerHTML = role === 'user'
+      ? `<div class="chat-bubble">${escHtml(text)}</div>`
+      : `<div class="chat-avatar">🤖</div><div class="chat-bubble">${escHtml(text)}</div>`
     msgList.insertBefore(div, typing)
     msgList.scrollTop = msgList.scrollHeight
   }
@@ -82,8 +91,28 @@
     }
   }
 
-  // ── API 호출 (Edge Function 프록시) ──────────────────────
-  async function callAI (history) {
+  // ── Solar: 브라우저에서 직접 호출 ────────────────────────
+  async function callSolar (history) {
+    if (!solarKey) throw new Error('Solar API 키를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.')
+    const res = await fetch('https://api.upstage.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${solarKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: 'solar-pro',
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history],
+        max_tokens: 700
+      })
+    })
+    const data = await res.json()
+    if (!res.ok) throw new Error(data.error?.message || `Solar HTTP ${res.status}`)
+    return data.choices?.[0]?.message?.content?.trim()
+  }
+
+  // ── OpenAI: Edge Function 프록시 경유 ────────────────────
+  async function callOpenAI (history) {
     const res = await fetch(EDGE_URL, {
       method: 'POST',
       headers: {
@@ -92,7 +121,7 @@
         'Authorization': `Bearer ${ANON_KEY}`
       },
       body: JSON.stringify({
-        model: activeModel,
+        model: 'openai',
         messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history]
       })
     })
@@ -108,14 +137,17 @@
 
     errorEl.textContent = ''
     input.value = ''
-    input.style.height = '2.4rem'
+    input.style.height = '2.75rem'
     appendMsg('user', text)
     isLoading = true
     sendBtn.disabled = true
     setTyping(true)
 
     try {
-      const reply = await callAI(messages.slice(-12))
+      const history = messages.slice(-12)
+      const reply = activeModel === 'solar'
+        ? await callSolar(history)
+        : await callOpenAI(history)
       setTyping(false)
       appendMsg('assistant', reply || '답변을 생성할 수 없습니다. 다시 시도해 주세요.')
     } catch (e) {
@@ -142,11 +174,13 @@
   })
 
   input.addEventListener('input', () => {
-    input.style.height = '2.4rem'
+    input.style.height = '2.75rem'
     input.style.height = Math.min(input.scrollHeight, 96) + 'px'
   })
 
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && popup.classList.contains('open')) togglePopup()
   })
+
+  loadSolarKey()
 })()
