@@ -131,6 +131,7 @@
 
   // ── 이벤트 ────────────────────────────────────────────────
   fab.addEventListener('click', togglePopup)
+  tooltip.addEventListener('click', togglePopup)
   sendBtn.addEventListener('click', send)
 
   input.addEventListener('keydown', e => {

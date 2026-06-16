@@ -912,7 +912,7 @@ input, textarea { font-family: var(--font); }
   font-weight: 700;
   white-space: nowrap;
   box-shadow: 0 6px 20px rgba(30,58,138,.4);
-  pointer-events: none;
+  cursor: pointer;
   animation: chatFloat 3s ease-in-out infinite;
   transition: opacity .2s, transform .2s;
 }
