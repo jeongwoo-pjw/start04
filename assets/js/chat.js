@@ -127,9 +127,7 @@
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error?.message || `HTTP ${res.status}`)
-    const reply = data.choices?.[0]?.message?.content?.trim()
-    if (!reply) throw new Error('[Debug] ' + JSON.stringify(data).slice(0, 200))
-    return reply
+    return data.choices?.[0]?.message?.content?.trim() || '답변을 생성할 수 없습니다. 다시 시도해 주세요.'
   }
 
   // ── 전송 ─────────────────────────────────────────────────
