@@ -174,7 +174,7 @@
       appendMsg('assistant', reply || '답변을 생성할 수 없습니다. 다시 시도해 주세요.')
     } catch (e) {
       setTyping(false)
-      errorEl.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해 주세요.'
+      errorEl.textContent = e.message || '오류가 발생했습니다.'
       console.error('[Chat]', e)
     } finally {
       isLoading = false
