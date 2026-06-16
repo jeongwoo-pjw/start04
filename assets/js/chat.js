@@ -1,7 +1,8 @@
 ;(function () {
   'use strict'
 
-  const EDGE_URL = 'https://poudbyqhmmdqrxoandhf.supabase.co/functions/v1/ai-chat'
+  const EDGE_URL  = 'https://poudbyqhmmdqrxoandhf.supabase.co/functions/v1/ai-chat'
+  const ANON_KEY  = 'sb_publishable_mrcFpEOLM6s0BlaBaB9CoA_cE_xrrKE'
 
   const SYSTEM_PROMPT =
     'You are the AI learning assistant for AI EDU platform. ' +
@@ -20,6 +21,7 @@
   const typing     = document.getElementById('chatTyping')
   const errorEl    = document.getElementById('chatError')
   const switchWrap = document.getElementById('chatModelSwitch')
+  const tooltip    = document.getElementById('chatTooltip')
 
   // ── 모델 전환 ─────────────────────────────────────────────
   function setModel (model) {
@@ -71,6 +73,7 @@
     const opened = popup.classList.toggle('open')
     fab.classList.toggle('open', opened)
     fab.setAttribute('aria-expanded', String(opened))
+    tooltip.classList.toggle('hidden', opened)
     if (opened) {
       if (messages.length === 0) {
         appendMsg('assistant', '안녕하세요! AI EDU AI 도우미입니다. AI 학습에 관해 무엇이든 질문해 주세요 😊')
@@ -83,7 +86,11 @@
   async function callAI (history) {
     const res = await fetch(EDGE_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': ANON_KEY,
+        'Authorization': `Bearer ${ANON_KEY}`
+      },
       body: JSON.stringify({
         model: activeModel,
         messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history]
