@@ -127,7 +127,7 @@
     })
     const data = await res.json()
     if (!res.ok) throw new Error(data.error?.message || `HTTP ${res.status}`)
-    return data.choices?.[0]?.message?.content?.trim()
+    return data.choices?.[0]?.message?.content?.trim() || '답변을 생성할 수 없습니다. 다시 시도해 주세요.'
   }
 
   // ── 전송 ─────────────────────────────────────────────────
