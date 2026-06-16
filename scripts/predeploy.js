@@ -32,6 +32,7 @@ const copies = [
   ['assets/js/board.js',       'assets/js/board.js'],
   ['assets/js/board-write.js', 'assets/js/board-write.js'],
   ['assets/js/board-detail.js','assets/js/board-detail.js'],
+  ['assets/js/chat.js',        'assets/js/chat.js'],
 ];
 
 copies.forEach(([src, dest]) => {

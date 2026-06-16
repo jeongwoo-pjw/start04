@@ -305,9 +305,37 @@
     </div>
   </div>
 
+  <!-- ========== CHAT POPUP ========== -->
+  <button class="chat-fab" id="chatFab" aria-label="AI 도우미 열기" aria-expanded="false">
+    <span class="chat-fab-icon--open">💬</span>
+    <span class="chat-fab-icon--close">✕</span>
+  </button>
+
+  <div class="chat-popup" id="chatPopup" role="dialog" aria-label="AI 도우미">
+    <div class="chat-header">
+      <div class="chat-header-icon">🤖</div>
+      <div class="chat-header-info">
+        <div class="chat-header-title">AI 도우미</div>
+        <div class="chat-header-sub">AI 학습 질문을 도와드려요</div>
+      </div>
+      <div class="chat-status-dot"></div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-typing" id="chatTyping">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <p class="chat-error" id="chatError"></p>
+    <div class="chat-input-wrap">
+      <textarea class="chat-input" id="chatInput" placeholder="질문을 입력하세요… (Enter 전송)" rows="1"></textarea>
+      <button class="chat-send-btn" id="chatSendBtn" aria-label="전송">➤</button>
+    </div>
+  </div>
+
   <script src="assets/js/app.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/supabase-client.js"></script>
+  <script src="assets/js/chat.js"></script>
   <script>
     // 인증 상태에 따라 헤더 버튼 렌더링
     (async function () {
