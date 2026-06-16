@@ -926,9 +926,6 @@ input, textarea { font-family: var(--font); }
   border-right: .55rem solid transparent;
   border-top: .6rem solid #3b82f6;
 }
-/* 팝업 열리면 도움말 숨김 */
-.chat-fab.open ~ .chat-popup,
-.chat-fab.open + * .chat-tooltip { opacity: 0; }
 #chatTooltip.hidden {
   opacity: 0;
   pointer-events: none;
