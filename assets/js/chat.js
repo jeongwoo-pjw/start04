@@ -8,17 +8,20 @@
 
   let solarKey  = null
   let openaiKey = null
+  let activeModel = 'solar'   // 'solar' | 'openai'
   let messages  = []
   let isLoading = false
 
-  const fab     = document.getElementById('chatFab')
-  const popup   = document.getElementById('chatPopup')
-  const msgList = document.getElementById('chatMessages')
-  const input   = document.getElementById('chatInput')
-  const sendBtn = document.getElementById('chatSendBtn')
-  const typing  = document.getElementById('chatTyping')
-  const errorEl = document.getElementById('chatError')
+  const fab        = document.getElementById('chatFab')
+  const popup      = document.getElementById('chatPopup')
+  const msgList    = document.getElementById('chatMessages')
+  const input      = document.getElementById('chatInput')
+  const sendBtn    = document.getElementById('chatSendBtn')
+  const typing     = document.getElementById('chatTyping')
+  const errorEl    = document.getElementById('chatError')
+  const switchWrap = document.getElementById('chatModelSwitch')
 
+  // ── API 키 로드 ───────────────────────────────────────────
   async function loadApiKeys () {
     try {
       const { data } = await window.sb
@@ -31,11 +34,31 @@
           if (row.key === 'openai_api_key' && row.value) openaiKey = row.value
         })
       }
+      // 키가 없는 모델은 버튼 비활성화
+      if (!solarKey)  switchWrap.querySelector('[data-model="solar"]').disabled  = true
+      if (!openaiKey) switchWrap.querySelector('[data-model="openai"]').disabled = true
+      // Solar 키 없으면 OpenAI로 기본 전환
+      if (!solarKey && openaiKey) setModel('openai')
     } catch (e) {
       console.warn('[Chat] API 키 로드 실패:', e)
     }
   }
 
+  // ── 모델 전환 ─────────────────────────────────────────────
+  function setModel (model) {
+    activeModel = model
+    switchWrap.querySelectorAll('.cms-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.model === model)
+    })
+  }
+
+  switchWrap.addEventListener('click', e => {
+    const btn = e.target.closest('.cms-btn')
+    if (!btn || btn.disabled) return
+    setModel(btn.dataset.model)
+  })
+
+  // ── 유틸 ─────────────────────────────────────────────────
   function escHtml (str) {
     return str
       .replace(/&/g,  '&amp;')
@@ -79,7 +102,7 @@
     }
   }
 
-  // Solar Pro 호출
+  // ── API 호출 ──────────────────────────────────────────────
   async function callSolar (history) {
     const res = await fetch('https://api.upstage.ai/v1/chat/completions', {
       method: 'POST',
@@ -101,7 +124,6 @@
     return data.choices?.[0]?.message?.content?.trim()
   }
 
-  // OpenAI GPT-4o-mini 호출 (fallback)
   async function callOpenAI (history) {
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -123,12 +145,14 @@
     return data.choices?.[0]?.message?.content?.trim()
   }
 
+  // ── 전송 ─────────────────────────────────────────────────
   async function send () {
     const text = input.value.trim()
     if (!text || isLoading) return
 
-    if (!solarKey && !openaiKey) {
-      errorEl.textContent = 'AI 서비스를 불러오는 중입니다. 잠시 후 다시 시도해 주세요.'
+    const key = activeModel === 'solar' ? solarKey : openaiKey
+    if (!key) {
+      errorEl.textContent = '선택한 모델의 API 키가 없습니다.'
       return
     }
 
@@ -140,23 +164,11 @@
     sendBtn.disabled = true
     setTyping(true)
 
-    const history = messages.slice(-12)
-
     try {
-      let reply = null
-
-      // Solar 우선, 실패 시 OpenAI fallback
-      if (solarKey) {
-        try {
-          reply = await callSolar(history)
-        } catch (e) {
-          console.warn('[Chat] Solar 실패, OpenAI로 전환:', e)
-          if (openaiKey) reply = await callOpenAI(history)
-          else throw e
-        }
-      } else {
-        reply = await callOpenAI(history)
-      }
+      const history = messages.slice(-12)
+      const reply = activeModel === 'solar'
+        ? await callSolar(history)
+        : await callOpenAI(history)
 
       setTyping(false)
       appendMsg('assistant', reply || '답변을 생성할 수 없습니다. 다시 시도해 주세요.')
